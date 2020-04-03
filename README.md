@@ -1,10 +1,8 @@
-# vagrant-ubuntu-desktop
-
-Ubuntu 18.04 LTS desktop box (setup using Vagrant + Ansible)
+# Ubuntu 18.04 LTS desktop box (setup using Vagrant + Ansible)
 
 Based on [original repo](https://github.com/heidemn/vagrant-bionic-desktop)
 
-VirtualBox version 6.0.10
+- **VirtualBox version 6.0.10**
 
 ## Customize
 
