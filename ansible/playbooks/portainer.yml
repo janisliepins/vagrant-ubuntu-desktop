@@ -1,0 +1,31 @@
+- name: Setup Portainer
+  hosts: all
+  become: yes
+  become_method: sudo
+  gather_facts: yes
+  vars:
+    ansible_python_interpreter: "/usr/bin/python3"
+  tasks:
+    - name: Ensure Portainer container is running
+      docker_compose:
+        project_name: portainer
+        definition:
+          version: "2"
+          services:
+            portainer:
+              container_name: portainer
+              image: portainer/portainer
+              volumes:
+                - "/var/run/docker.sock:/var/run/docker.sock"
+              ports:
+                - "9000:9000"
+              restart: always
+
+    - wait_for:
+        host: 127.0.0.1
+        port: 9000
+
+    - assert:
+        quiet: yes
+        that:
+          - "portainer.portainer.state.running"
