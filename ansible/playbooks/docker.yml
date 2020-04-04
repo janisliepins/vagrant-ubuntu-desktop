@@ -4,7 +4,7 @@
   become_method: sudo
   gather_facts: yes
   vars:
-    ansible_python_interpreter: '/usr/bin/python3'
+    ansible_python_interpreter: "/usr/bin/python3"
 
   pre_tasks:
     - name: Ensure APT is updated
@@ -72,3 +72,13 @@
         url: "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-Linux-x86_64"
         dest: /usr/local/bin/docker-compose
         mode: 0755
+# - name: Setup Portainer
+#   hosts: all
+#   become: yes
+#   become_method: sudo
+#   gather_facts: yes
+#   vars:
+#     ansible_python_interpreter: "/usr/bin/python3"
+#   tasks:
+#     - name: Pull Portainer image
+

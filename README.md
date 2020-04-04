@@ -11,12 +11,17 @@ If you aren't using VirtualBox, or if you're fine with the default disk size of 
 - Skip the plugin installation.
 - Remove the `config.disksize...` line from the Vagrantfile.
 
-
 ## How to run it
 
 ```
 vagrant up
+```
 
+- You may be prompted for plugin installation. It will automatically install Guest Additions and enable Vagrant disk size configuration. When plugins are installe simply repeat command `vagrant up`.
+
+- After succesfull setup, reload VM and start your work.
+
+```
 vagrant reload
 ```
 
