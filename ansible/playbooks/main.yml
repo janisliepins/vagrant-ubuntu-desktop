@@ -4,3 +4,4 @@
 - import_playbook: docker.yml
 - import_playbook: java.yml
 - import_playbook: nodejs.yml
+- import_playbook: portainer.yml

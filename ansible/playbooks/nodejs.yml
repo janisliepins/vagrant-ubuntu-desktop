@@ -5,15 +5,36 @@
   gather_facts: yes
   vars:
     ansible_python_interpreter: "/usr/bin/python3"
-
+    nodejs_version: "12"
   pre_tasks:
     - name: Ensure APT is updated
       apt:
         update_cache: true
 
   tasks:
-    - name: Install Node and NPM
+    - name: Install the gpg key for nodejs LTS
+      apt_key:
+        url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+
+    - name: Install the nodejs LTS repos
+      apt_repository:
+        repo: "deb https://deb.nodesource.com/node_{{ NODEJS_VERSION }}.x {{ ansible_facts['distribution_release'] }} main"
+        update_cache: yes
+
+    - name: Install the nodejs
       apt:
-        pkg:
-          - nodejs
-          - npm
+        name: nodejs
+        state: latest
+
+    # - name: npm install
+    #   npm:
+    #     name: "{{ item.name }}"
+    #     state: "{{ item.state }}"
+    #     global: "yes"
+    #     executable: "/usr/bin/npm --unsafe-perm --allow-root"
+    #   with_items:
+    #     - { state: "latest", name: "eslint" }
+    #     - { state: "latest", name: "gulp-cli" }
+    #     - { state: "latest", name: "node-sass" }
+    #     - { state: "latest", name: "prettier" }
+    #     - { state: "latest", name: "stylelint" }
