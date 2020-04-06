@@ -18,7 +18,7 @@
 
     - name: Install the nodejs LTS repos
       apt_repository:
-        repo: "deb https://deb.nodesource.com/node_{{ NODEJS_VERSION }}.x {{ ansible_facts['distribution_release'] }} main"
+        repo: "deb https://deb.nodesource.com/node_{{ nodejs_version }}.x {{ ansible_facts['distribution_release'] }} main"
         update_cache: yes
 
     - name: Install the nodejs
