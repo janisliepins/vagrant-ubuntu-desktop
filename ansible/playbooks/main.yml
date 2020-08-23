@@ -4,4 +4,8 @@
 - import_playbook: docker.yml
 - import_playbook: java.yml
 - import_playbook: nodejs.yml
+- import_playbook: openvpn.yml
 - import_playbook: portainer.yml
+- import_playbook: jenkins.yml
+- import_playbook: mongodb.yml
+- import_playbook: custom.yml

@@ -55,13 +55,13 @@
           - docker
           - docker-compose
 
-    - name: "Ensure Docker service is enabled and restarted"
+    - name: Ensure Docker service is enabled and restarted
       systemd:
         name: docker
         state: restarted
         enabled: yes
 
-    - name: Ensure docker users are added to the docker group
+    - name: Ensure Docker users are added to the docker group
       user:
         name: vagrant
         groups: docker
@@ -72,13 +72,4 @@
         url: "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-Linux-x86_64"
         dest: /usr/local/bin/docker-compose
         mode: 0755
-# - name: Setup Portainer
-#   hosts: all
-#   become: yes
-#   become_method: sudo
-#   gather_facts: yes
-#   vars:
-#     ansible_python_interpreter: "/usr/bin/python3"
-#   tasks:
-#     - name: Pull Portainer image
 

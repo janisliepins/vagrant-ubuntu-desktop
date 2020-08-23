@@ -1,0 +1,36 @@
+- name: Setup MongoDB
+  hosts: all
+  become: yes
+  become_method: sudo
+  gather_facts: yes
+  vars:
+    ansible_python_interpreter: "/usr/bin/python3"
+  tasks:
+    - name: Ensure MongoDB container is running
+      docker_compose:
+        project_name: mongodb
+        definition:
+          version: "2"
+          services:
+            mongodb:
+              container_name: mongodb
+              image: mongo:latest
+              environment:
+                MONGO_INITDB_ROOT_USERNAME: root
+                MONGO_INITDB_ROOT_PASSWORD: password
+              ports:
+                - 27017:27017
+              volumes:
+                - mongodb_data:/data/db
+              restart: always
+          volumes:
+            mongodb_data:
+
+    - wait_for:
+        host: 127.0.0.1
+        port: 27017
+
+    - assert:
+        quiet: yes
+        that:
+          - "mongodb.mongodb.state.running"

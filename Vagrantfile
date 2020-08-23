@@ -4,12 +4,12 @@ Vagrant.configure("2") do |config|
 
   config.vm.box = "ubuntu/bionic64"
 
-  config.disksize.size = "50GB"
+  config.disksize.size = "75GB"
 
   config.vbguest.auto_update = true
 
   config.vm.synced_folder ".", "/vagrant", disabled: true
-  config.vm.synced_folder "./workspace", "/vagrant/workspace"
+  config.vm.synced_folder "./workspace", "/home/vagrant/workspace"
   config.vm.synced_folder "./ansible", "/vagrant/ansible"
 
   config.vm.hostname = "ubuntu-desktop"

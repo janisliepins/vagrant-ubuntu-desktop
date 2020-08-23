@@ -1,0 +1,34 @@
+- name: Setup Jenkins
+  hosts: all
+  become: yes
+  become_method: sudo
+  gather_facts: yes
+  vars:
+    ansible_python_interpreter: "/usr/bin/python3"
+  tasks:
+    - name: Ensure Jenkins container is running
+      docker_compose:
+        project_name: jenkins
+        definition:
+          version: "2"
+          services:
+            jenkins:
+              container_name: jenkins
+              image: jenkins/jenkins:lts
+              volumes:
+                - "jenkins_home:/var/jenkins_home"
+              ports:
+                - 8080:8080
+                - 50000:50000
+              restart: always
+          volumes:
+            jenkins_home:
+
+    - wait_for:
+        host: 127.0.0.1
+        port: 8080
+
+    - assert:
+        quiet: yes
+        that:
+          - "jenkins.jenkins.state.running"

@@ -19,3 +19,4 @@
           - lightdm
           - lightdm-gtk-greeter
           - xfce4-whiskermenu-plugin
+          - terminator
