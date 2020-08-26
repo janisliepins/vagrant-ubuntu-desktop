@@ -4,16 +4,47 @@
   become_method: sudo
   gather_facts: yes
   vars:
-    ansible_python_interpreter: '/usr/bin/python3'
+    ansible_python_interpreter: "/usr/bin/python3"
   tasks:
     - name: Set timezone to Europe/Riga
       timezone:
         name: Europe/Riga
-    
+
     - name: Generate SSH key pair
       openssh_keypair:
         path: /home/vagrant/.ssh/id_rsa
-        comment: "janis.liepins"
+        comment: "@ubuntu-desktop"
         group: vagrant
         owner: vagrant
 
+    - name: Update 'root' user's .bashrc
+      blockinfile:
+        path: /root/.bashrc
+        insertafter: EOF
+        block: |
+          git_branch() {
+            if [ -d .git ]
+            then
+              git status 2> /dev/null | grep "working tree clean" &> /dev/null
+              if [ $? -ne 0 ]; then STATUS="!"; else STATUS=""; fi
+                echo -n " (`git branch 2>/dev/null | grep '^*' | colrm 1 2`$STATUS)"
+              fi
+          }
+
+          export PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]\[\033[01;91m\]\u\[\033[01;32m\]@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;91m\]\$(git_branch)\n\[\033[01;91m\]└─\[\033[0m\033[01;91m\] \# ▶ \[\033[00m\]"
+
+    - name: Update 'vagrant' user's .bashrc
+      blockinfile:
+        path: /home/vagrant/.bashrc
+        insertafter: EOF
+        block: |
+          git_branch() {
+            if [ -d .git ]
+            then
+              git status 2> /dev/null | grep "working tree clean" &> /dev/null
+              if [ $? -ne 0 ]; then STATUS="!"; else STATUS=""; fi
+                echo -n " (`git branch 2>/dev/null | grep '^*' | colrm 1 2`$STATUS)"
+              fi
+          }
+
+          export PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;91m\]\$(git_branch)\n\[\033[01;32m\]└─\[\033[0m\033[01;32m\] \$ ▶ \[\033[00m\]"

@@ -1,0 +1,11 @@
+- name: Install Postman
+  hosts: all
+  become: yes
+  become_method: sudo
+  gather_facts: yes
+  vars:
+    ansible_python_interpreter: "/usr/bin/python3"
+  tasks:
+    - name: Install Postman
+      snap:
+        name: postman

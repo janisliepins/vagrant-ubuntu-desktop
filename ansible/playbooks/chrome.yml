@@ -4,7 +4,7 @@
   become_method: sudo
   gather_facts: no
   vars:
-    ansible_python_interpreter: '/usr/bin/python3'
+    ansible_python_interpreter: "/usr/bin/python3"
 
   pre_tasks:
     - name: Ensure APT is updated
@@ -35,5 +35,11 @@
         path: "{{ item.path }}"
         state: "{{ item.state }}"
       with_items:
-        - { state: "absent", path: "/etc/apt/sources.list.d/google-chrome.list" }
-        - { state: "absent", path: "/etc/apt/sources.list.d/google-chrome.list.save" }
+        - {
+            state: "absent",
+            path: "/etc/apt/sources.list.d/google-chrome.list",
+          }
+        - {
+            state: "absent",
+            path: "/etc/apt/sources.list.d/google-chrome.list.save",
+          }
